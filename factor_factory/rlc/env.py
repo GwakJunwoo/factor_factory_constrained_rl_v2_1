@@ -1,53 +1,61 @@
 from __future__ import annotations
-from dataclasses import dataclass, field
-from typing import Optional, List, Dict, Tuple
+from collections import Counter
+from dataclasses import dataclass
+from typing import Dict, List, Optional, Tuple
+from factor_factory.rlc.callback import SaveBestProgramCallback
+
 import gymnasium as gym
-import numpy as np, pandas as pd
-from factor_factory.rlc.compiler import calc_tree_depth
-from .grammar import N_TOKENS, ARITY
+import numpy as np
+import pandas as pd
+
 from .compiler import eval_prefix
+from .utils import tokens_to_infix, calc_tree_depth, count_entries
+from .grammar import ARITY, N_TOKENS
 from ..backtest import vector_backtest
-from ..selection import compute_metrics
+
+# =====================================================
+#  ProgramEnv (z‑score → ±2 진입 / 0 청산 버전)
+# =====================================================
 
 @dataclass
 class RLCConfig:
     max_len: int = 21
-    length_penalty: float = 0.001
-    lambda_dd: float = 2.0
-    lambda_depth: float = 0.1
-    lambda_turnover: float = 0.5
-    alpha_win: float = 0.25
+    length_penalty: float = 0.0005
+    # reward penalties
+    lambda_depth: float = 0.002
+    lambda_turnover: float = 0.0005
+    lambda_const1: float = 3.0
+    lambda_std: float = 1.0      # 미세 진동 신호 패널티
+    # trading params
     commission: float = 0.0004
     slippage: float = 0.0010
     leverage: int = 1
+    # speed knobs
     eval_stride: int = 2
-    max_eval_bars: int = 20000
-    cache_size: int = 2048
+    max_eval_bars: int = 20_000
+    cache_size: int = 2_048
+
 
 class ProgramEnv(gym.Env):
-    metadata = {"render_modes": []}
+    """트리 결과를 z‑score 후
+       ‑ z ≥ +2  → +1 (Long)
+       ‑ z ≤ −2  → −1 (Short)
+       ‑ else    →  0 (Flat)
+    """
+
+    metadata = {}
+
     def __init__(self, df: pd.DataFrame, cfg: RLCConfig):
-        self.df_full = df
         self.cfg = cfg
-        view = df.iloc[-self.cfg.max_eval_bars:]
-        self.df = view.iloc[:: max(1, self.cfg.eval_stride)].copy()
-        self.observation_space = gym.spaces.Box(low=-1.0, high=1.0, shape=(cfg.max_len+2,), dtype=np.float32)
+        view = df.iloc[-cfg.max_eval_bars :]
+        self.df = view.iloc[:: max(1, cfg.eval_stride)].copy()
+
+        self.observation_space = gym.spaces.Box(low=-1, high=1, shape=(cfg.max_len + 2,), dtype=np.float32)
         self.action_space = gym.spaces.Discrete(N_TOKENS)
-        self._cache: Dict[Tuple[int, ...], Tuple[float, dict]] = {}
-        self._cache_order: List[Tuple[int, ...]] = []
+
         self.reset()
 
-    def _cache_get(self, key: Tuple[int, ...]):
-        return self._cache.get(key, None)
-
-    def _cache_put(self, key: Tuple[int, ...], val):
-        if key in self._cache: return
-        self._cache[key] = val
-        self._cache_order.append(key)
-        if len(self._cache_order) > self.cfg.cache_size:
-            old = self._cache_order.pop(0)
-            self._cache.pop(old, None)
-
+    # -------------------- reset --------------------
     def reset(self, seed: Optional[int] = None, options=None):
         super().reset(seed=seed)
         self.tokens: List[int] = []
@@ -55,79 +63,74 @@ class ProgramEnv(gym.Env):
         self.done = False
         return self._obs(), {}
 
+    # -------------------- observation --------------
     def _obs(self):
-        vec = np.full(self.cfg.max_len+2, -1.0, dtype=np.float32)
-        for i, tok in enumerate(self.tokens[-self.cfg.max_len:]):
-            vec[i] = (tok / (N_TOKENS-1))*2 - 1
-        vec[-2] = np.tanh(self.need/8)
-        vec[-1] = (len(self.tokens) / self.cfg.max_len)*2 - 1
+        vec = np.full(self.cfg.max_len + 2, -1.0, dtype=np.float32)
+        for i, tok in enumerate(self.tokens[-self.cfg.max_len :]):
+            vec[i] = (tok / (N_TOKENS - 1)) * 2 - 1
+        vec[-2] = np.tanh(self.need / 8)
+        vec[-1] = (len(self.tokens) / self.cfg.max_len) * 2 - 1
         return vec
 
-    def _legal(self, tok:int) -> bool:
-        remaining = self.cfg.max_len - len(self.tokens) - 1
+    # -------------------- token legality -----------
+    def _legal(self, tok: int) -> bool:
+        rem = self.cfg.max_len - len(self.tokens) - 1
         need_after = self.need - 1 + ARITY[tok]
-        return 0 <= need_after <= remaining + 1
+        return 0 <= need_after <= rem + 1
 
-    def step(self, action: int):
+    # -------------------- step ---------------------
+    def step(self, action):
         if self.done:
-            raise RuntimeError("Episode finished")
+            raise RuntimeError("Episode done; call reset().")
+
         tok = int(action)
-        reward = 0.0
         if not self._legal(tok):
             self.done = True
             return self._obs(), -1.0, True, False, {"invalid": True}
+
         self.tokens.append(tok)
         self.need = self.need - 1 + ARITY[tok]
-        reward -= self.cfg.length_penalty
+        reward = -self.cfg.length_penalty
 
-        terminated = False; info = {}
+        terminated = False
+        info: Dict = {}
+
         if self.need == 0:
-            key = tuple(self.tokens)
-            cache_val = self._cache_get(key)
-            if cache_val is not None:
-                r_fin, info = cache_val
-                reward += float(r_fin)
-                terminated = True
-            else:
-                try:
-                    sig = eval_prefix(self.tokens, self.df).dropna()
-                    if sig.empty or sig.std(ddof=0) == 0:
-                        r_fin = -1.0
-                        info = {"program": self.tokens.copy(), "empty": True}
-                    else:
-                        price = self.df["close"].reindex(sig.index)
-                        equity, pnl = vector_backtest(price, sig,
-                            commission=self.cfg.commission,
-                            slippage=self.cfg.slippage,
-                            leverage=self.cfg.leverage,
-                        )
-                        m = compute_metrics(pnl, equity, sig)
-                        sh = m.get("sharpe") or -1.0
-                        wr = float((pnl > 0).mean()) if len(pnl) > 0 else 0.0
-                        mdd = m.get("mdd") or -1.0
-                        turnover = m.get("turnover") or 0.0
-                        tree_depth = calc_tree_depth(self.tokens)
+            try:
+                raw = eval_prefix(self.tokens, self.df).astype(float).replace([np.inf, -np.inf], np.nan).dropna()
+                if raw.empty or raw.std(ddof=0) < 1e-6:
+                    reward = -1.0; terminated = True; info = {"invalid_signal": True}
+                else:
+                    # z‑score (전체 구간 기준)
+                    z = (raw - raw.mean()) / raw.std(ddof=0)
+                    sig = pd.Series(0, index=z.index, dtype=float)
+                    sig[z >= 2.0] = 1.0
+                    sig[z <= -2.0] = -1.0
+                    # backtest on discrete signal
+                    price = self.df["close"].reindex(sig.index)
+                    equity, pnl = vector_backtest(price, sig, commission=self.cfg.commission, slippage=self.cfg.slippage, leverage=self.cfg.leverage)
+                    pnl_sum = float(pnl.sum())
+                    trades = count_entries(sig.values)
+                    depth = calc_tree_depth(self.tokens)
 
-                        # 보상 계산
-                        mdd_term = (mdd if mdd > 0 else -self.cfg.lambda_dd * abs(mdd))
-                        r_fin = (
-                            sh +
-                            self.cfg.alpha_win * wr +
-                            mdd_term -
-                            self.cfg.lambda_depth * tree_depth -
-                            self.cfg.lambda_turnover * turnover
-                        )
-                        r_fin = float(np.clip(r_fin, -10.0, 10.0))
-                        info = {"metrics": m, "program": self.tokens.copy()}
-                    self._cache_put(key, (r_fin, info))
-                    reward += r_fin
+                    cnt = Counter(self.tokens)
+                    const_ratio = cnt.get(12, 0) / len(self.tokens)
+                    std_pen = self.cfg.lambda_std / raw.std(ddof=0)
+
+                    reward = (
+                        pnl_sum
+                        - self.cfg.lambda_depth * depth
+                        - self.cfg.lambda_turnover * trades
+                        - self.cfg.lambda_const1 * const_ratio
+                        - std_pen
+                    )
+
+                    print(f"[R={reward:.4f}] pnl={pnl_sum:.4f} depth={depth} trades={trades} CONST%={const_ratio:.2f}\n{tokens_to_infix(self.tokens)}")
+
+                    info = {"pnl": pnl_sum, "depth": depth, "trades": trades, "program": self.tokens.copy()} 
                     terminated = True
-                except Exception as e:
-                    reward += -1.0
-                    info = {"error": str(e), "program": self.tokens.copy()}
-                    terminated = True
+            except Exception as e:
+                reward = -1.0; info = {"error": str(e), "program": self.tokens.copy()}; terminated = True
 
         self.done = terminated
-        if not np.isfinite(reward):
-            reward = -1.0
         return self._obs(), float(reward), terminated, False, info

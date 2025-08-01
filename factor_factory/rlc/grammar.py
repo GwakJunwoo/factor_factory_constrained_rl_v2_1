@@ -22,5 +22,7 @@ TERMS = {k for k,(n,a) in TOKENS.items() if a==0}
 ARITY = {k:a for k,(_,a) in TOKENS.items()}
 N_TOKENS = len(TOKENS)
 
+TOKEN_NAMES = {k: v[0] for k, v in TOKENS.items()}
+
 def name(tok:int) -> str:
     return TOKENS[tok][0]
