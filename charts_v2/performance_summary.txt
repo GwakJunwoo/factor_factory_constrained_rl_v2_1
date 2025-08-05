@@ -1,0 +1,29 @@
+
+트레이딩 전략 성과 리포트
+==================================================
+
+전략 수식: ((ABS((((VOLUME SUB LOG(MACD)) ADD HIGH) ADD (MACD MIN OPEN))) MAX (OPEN MUL MACD)) MAX (MACD MUL (RSI14 ADD BBANDS_LOWER)))
+
+주요 성과 지표:
+- CAGR: nan%
+- Sharpe Ratio: 70.4571
+- Max Drawdown: -inf%
+- Calmar Ratio: nan
+- Win Rate: 100.00%
+- Profit Factor: inf
+
+거래 통계:
+- 총 거래 수: 9607
+- 회전율: 1106.09
+- 평균 거래 손익: 0.676910
+- 최대 연속 손실: 0 days
+
+시그널 통계:
+- 시그널 범위: [-1.7632, 2.0595]
+- 평균: 0.0000
+- 표준편차: 1.0000
+- 롱 신호 비율: 35.06%
+- 숏 신호 비율: 61.69%
+- 플랫 비율: 3.24%
+
+최종 수익률: -61.00%

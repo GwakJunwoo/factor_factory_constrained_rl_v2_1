@@ -1,0 +1,13 @@
+{
+  "cagr": NaN,
+  "sharpe": 70.45714092588126,
+  "mdd": -Infinity,
+  "turnover": 1106.0865478515625,
+  "calmar": NaN,
+  "win_rate": 1.0,
+  "profit_factor": Infinity,
+  "max_consecutive_losses": 0,
+  "information_ratio": 3.6877037238382613,
+  "total_trades": 9607,
+  "avg_trade_pnl": 0.6769101063693154
+}

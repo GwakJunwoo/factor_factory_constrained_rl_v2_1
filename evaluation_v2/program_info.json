@@ -1,0 +1,28 @@
+{
+  "tokens": [
+    20,
+    20,
+    22,
+    0,
+    0,
+    1,
+    8,
+    23,
+    18,
+    6,
+    21,
+    18,
+    5,
+    2,
+    5,
+    18,
+    2,
+    18,
+    0,
+    11,
+    17
+  ],
+  "formula": "((ABS((((VOLUME SUB LOG(MACD)) ADD HIGH) ADD (MACD MIN OPEN))) MAX (OPEN MUL MACD)) MAX (MACD MUL (RSI14 ADD BBANDS_LOWER)))",
+  "depth": 8,
+  "length": 21
+}

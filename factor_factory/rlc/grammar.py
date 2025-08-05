@@ -16,8 +16,22 @@ TOKENS = {
     10: ("SMA20", 0),
     11: ("RSI14", 0),
     12: ("CONST1", 0),
+    13: ("SMA5", 0),
+    14: ("EMA10", 0),
+    15: ("EMA20", 0),
+    16: ("BBANDS_UPPER", 0),
+    17: ("BBANDS_LOWER", 0),
+    18: ("MACD", 0),
+    19: ("STOCH", 0),
+    20: ("MAX", 2),
+    21: ("MIN", 2),
+    22: ("ABS", 1),
+    23: ("LOG", 1),
+    24: ("LAG1", 1),
 }
-OPS = {k for k,(n,a) in TOKENS.items() if a==2}
+OPS = {k for k,(n,a) in TOKENS.items() if a>=1}  # 단항/이진 연산자 모두 포함
+BINARY_OPS = {k for k,(n,a) in TOKENS.items() if a==2}  # 이진 연산자만
+UNARY_OPS = {k for k,(n,a) in TOKENS.items() if a==1}   # 단항 연산자만
 TERMS = {k for k,(n,a) in TOKENS.items() if a==0}
 ARITY = {k:a for k,(_,a) in TOKENS.items()}
 N_TOKENS = len(TOKENS)

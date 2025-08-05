@@ -1,7 +1,11 @@
 
-numpy
-pandas
-pyarrow
+numpy>=1.21.0
+pandas>=1.3.0
+pyarrow>=5.0.0
 stable-baselines3>=2.3.0
 gymnasium>=0.29
 torch>=2.3
+ta-lib>=0.4.25  # 추가 기술적 지표 라이브러리 (선택사항)
+scipy>=1.7.0    # 수학 연산 최적화
+matplotlib>=3.5.0  # 차트 생성
+seaborn>=0.11.0    # 고급 시각화 (선택사항)
