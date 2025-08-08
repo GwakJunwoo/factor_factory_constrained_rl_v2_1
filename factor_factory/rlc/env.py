@@ -51,6 +51,11 @@ class RLCConfig:
     # validation parameters
     max_signal_change_ratio: float = 0.3  # 최대 신호 변경 비율
     max_correlation_threshold: float = 0.08  # 신호-수익률 상관관계 임계값
+    # factor pool settings
+    enable_factor_pool: bool = True  # 팩터 풀 자동 저장 활성화
+    factor_pool_path: str = "factor_pool"  # 팩터 풀 저장 경로
+    auto_save_top_n: int = 5  # 자동 저장할 상위 팩터 수
+    auto_save_frequency: int = 100  # 자동 저장 빈도 (에피소드 단위)
 
 
 class ProgramEnv(gym.Env):
@@ -58,6 +63,7 @@ class ProgramEnv(gym.Env):
        - 미래 정보 누출 방지
        - 실제 거래 지연 시간 반영
        - 현실적 거래 비용 및 제약 조건
+       - 상위 팩터 자동 저장 및 관리
     """
 
     def __init__(self, df: pd.DataFrame, cfg: RLCConfig = None):
@@ -84,6 +90,20 @@ class ProgramEnv(gym.Env):
         # 검증 통계
         self.validation_failures = 0
         self.total_validations = 0
+        
+        # Factor Pool 시스템 초기화
+        if self.cfg.enable_factor_pool:
+            from ..pool import FactorPool, AutoSaveFactorCallback
+            self.factor_pool = FactorPool(self.cfg.factor_pool_path)
+            self.factor_callback = AutoSaveFactorCallback(
+                self.factor_pool, 
+                top_n=self.cfg.auto_save_top_n,
+                save_frequency=self.cfg.auto_save_frequency
+            )
+            print(f"✅ Factor Pool 활성화: {self.cfg.factor_pool_path}")
+        else:
+            self.factor_pool = None
+            self.factor_callback = None
 
     # -------------------- reset --------------------
     def reset(self, seed: Optional[int] = None, options=None):
@@ -208,6 +228,25 @@ class ProgramEnv(gym.Env):
                             - mdd_penalty                     # MDD 페널티 (신규)
                             - signal_quality_penalty         # 신호 품질 페널티
                         )
+                        
+                        # Factor Pool에 팩터 저장 (조건 만족 시)
+                        if self.factor_callback and pnl_sum > 0 and not validation_result.get('has_future_leak', False):
+                            episode_info = {
+                                'pnl': pnl_sum,
+                                'program': self.tokens.copy(),
+                                'formula': tokens_to_infix(self.tokens),
+                                'reward': reward,
+                                'depth': depth,
+                                'trades': trades,
+                                'max_drawdown': max_drawdown,
+                                'signal_change_ratio': signal_change_ratio,
+                                'future_leak': False,
+                                'validation_result': validation_result,
+                                'pnl_series': pnl,
+                                'equity_series': equity,
+                                'signal_series': signal
+                            }
+                            self.factor_callback.on_episode_end(episode_info)
                         
                         # 통계 출력
                         cache_hit_rate = self.cache_hits / self.total_programs_evaluated if self.total_programs_evaluated > 0 else 0

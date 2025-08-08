@@ -1,0 +1,54 @@
+{
+  "total_iterations": 3,
+  "total_episodes": 300,
+  "best_performance": -Infinity,
+  "final_performance": null,
+  "discovered_factors_count": 0,
+  "training_history": [
+    {
+      "iteration": 1,
+      "time": 527.5755479335785,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 173,
+        "episodes": 50,
+        "avg_reward": -1.852312357499534,
+        "max_reward": -0.7618088932240556,
+        "min_reward": -5.30754266756395
+      }
+    },
+    {
+      "iteration": 2,
+      "time": 105.51754021644592,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 363,
+        "episodes": 105,
+        "avg_reward": -1.7865490829478818,
+        "max_reward": -0.7618088932240556,
+        "min_reward": -5.30754266756395
+      }
+    },
+    {
+      "iteration": 3,
+      "time": 198.2016167640686,
+      "training_stats": {
+        "epochs": 10,
+        "avg_loss": 4.305220532417297,
+        "final_loss": 3.5367162227630615
+      },
+      "data_samples": {
+        "total_samples": 611,
+        "episodes": 178,
+        "avg_reward": -1.769383762705768,
+        "max_reward": -0.7618088932240556,
+        "min_reward": -5.30754266756395
+      }
+    }
+  ],
+  "performance_history": []
+}

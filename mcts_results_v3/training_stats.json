@@ -1,0 +1,38 @@
+{
+  "total_iterations": 2,
+  "total_episodes": 100,
+  "best_performance": -Infinity,
+  "final_performance": null,
+  "discovered_factors_count": 0,
+  "training_history": [
+    {
+      "iteration": 1,
+      "time": 228.04973983764648,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 86,
+        "episodes": 28,
+        "avg_reward": -3.0561757585014964,
+        "max_reward": -1.0105,
+        "min_reward": -7.850069073818493
+      }
+    },
+    {
+      "iteration": 2,
+      "time": 65.14490485191345,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 151,
+        "episodes": 50,
+        "avg_reward": -3.132498824094419,
+        "max_reward": -1.0105,
+        "min_reward": -8.655159840743922
+      }
+    }
+  ],
+  "performance_history": []
+}

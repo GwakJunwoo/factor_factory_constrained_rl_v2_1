@@ -1,0 +1,24 @@
+{
+  "total_iterations": 1,
+  "total_episodes": 10,
+  "best_performance": -Infinity,
+  "final_performance": null,
+  "discovered_factors_count": 0,
+  "training_history": [
+    {
+      "iteration": 1,
+      "time": 39.539711236953735,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 12,
+        "episodes": 5,
+        "avg_reward": -1.9021402587762073,
+        "max_reward": -1.5181676520640355,
+        "min_reward": -2.794193485561992
+      }
+    }
+  ],
+  "performance_history": []
+}

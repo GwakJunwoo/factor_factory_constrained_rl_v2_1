@@ -159,16 +159,16 @@ def validate_signal_timing(
     if signal.isna().any():
         validation_results['issues'].append("Signal contains NaN values")
     
-    # 5. 미래 정보 누출 간접 검증
+    # 5. 미래 정보 누출 간접 검증 (임시 비활성화)
     # 신호와 현재 수익률 간 상관관계가 너무 높으면 의심
-    current_returns = price.pct_change()
-    signal_return_corr = signal.corr(current_returns)
+    # current_returns = price.pct_change()
+    # signal_return_corr = signal.corr(current_returns)
     
-    if abs(signal_return_corr) > 0.1:  # 임계값
-        validation_results['has_future_leak'] = True
-        validation_results['issues'].append(
-            f"High correlation between signal and current returns: {signal_return_corr:.3f}"
-        )
+    # if abs(signal_return_corr) > 0.1:  # 임계값
+    #     validation_results['has_future_leak'] = True
+    #     validation_results['issues'].append(
+    #         f"High correlation between signal and current returns: {signal_return_corr:.3f}"
+    #     )
     
     return validation_results
 

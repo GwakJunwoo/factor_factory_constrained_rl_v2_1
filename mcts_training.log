@@ -1,0 +1,192 @@
+2025-08-07 12:36:54,237 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-07 12:36:54,237 - INFO - NumExpr defaulting to 8 threads.
+2025-08-07 12:36:57,147 - INFO - 데이터 로딩 시작
+2025-08-07 12:36:57,148 - ERROR - 데이터 로딩 실패: 'ParquetCache' object has no attribute 'get'
+2025-08-07 12:37:53,733 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-07 12:37:53,734 - INFO - NumExpr defaulting to 8 threads.
+2025-08-07 12:37:56,697 - INFO - 데이터 로딩 시작
+2025-08-07 12:37:56,732 - INFO - 데이터 로딩 완료: BTCUSDT_1h
+2025-08-07 12:37:56,732 - INFO - 데이터 크기: (9625, 5), 기간: 2024-06-01 00:00:00+00:00 ~ 2025-07-07 00:00:00+00:00
+2025-08-07 12:37:56,732 - INFO - MCTS 환경 설정
+2025-08-07 12:37:56,734 - INFO - Policy-Value Network 초기화
+2025-08-07 12:37:56,736 - INFO - 네트워크 구조: [256, 256, 128]
+2025-08-07 12:37:56,736 - INFO - Factor Pool 초기화
+2025-08-07 12:37:56,757 - INFO - AlphaZero Trainer 초기화
+2025-08-07 12:37:58,017 - INFO - MCTS 기반 Factor Discovery 학습 시작
+2025-08-07 12:37:58,017 - INFO - 설정:
+2025-08-07 12:37:58,017 - INFO -   - 반복 횟수: 50
+2025-08-07 12:37:58,018 - INFO -   - 반복당 에피소드: 100
+2025-08-07 12:37:58,018 - INFO -   - MCTS 시뮬레이션: 800
+2025-08-07 12:37:58,018 - INFO -   - 신경망 학습 에포크: 10
+2025-08-07 12:37:58,018 - INFO -   - 결과 저장: mcts_results
+2025-08-07 13:25:16,273 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-07 13:25:16,273 - INFO - NumExpr defaulting to 8 threads.
+2025-08-07 13:25:19,349 - INFO - 데이터 로딩 시작
+2025-08-07 13:25:19,382 - INFO - 데이터 로딩 완료: BTCUSDT_1h
+2025-08-07 13:25:19,382 - INFO - 데이터 크기: (9625, 5), 기간: 2024-06-01 00:00:00+00:00 ~ 2025-07-07 00:00:00+00:00
+2025-08-07 13:25:19,382 - INFO - MCTS 환경 설정
+2025-08-07 13:25:19,384 - INFO - Policy-Value Network 초기화
+2025-08-07 13:25:19,386 - INFO - 네트워크 구조: [256, 256, 128]
+2025-08-07 13:25:19,386 - INFO - Factor Pool 초기화
+2025-08-07 13:25:19,388 - INFO - AlphaZero Trainer 초기화
+2025-08-07 13:25:20,733 - INFO - MCTS 기반 Factor Discovery 학습 시작
+2025-08-07 13:25:20,733 - INFO - 설정:
+2025-08-07 13:25:20,733 - INFO -   - 반복 횟수: 3
+2025-08-07 13:25:20,733 - INFO -   - 반복당 에피소드: 100
+2025-08-07 13:25:20,733 - INFO -   - MCTS 시뮬레이션: 800
+2025-08-07 13:25:20,733 - INFO -   - 신경망 학습 에포크: 10
+2025-08-07 13:25:20,734 - INFO -   - 결과 저장: mcts_results_v2
+2025-08-07 13:39:12,047 - INFO - 학습 완료! 최종 통계:
+2025-08-07 13:39:12,048 - INFO - 환경 통계: {'total_evaluations': 624, 'successful_evaluations': 502, 'success_rate': 0.8044871794871795, 'avg_evaluation_time': 0, 'cache_hits': 129, 'total_programs': 503, 'validation_failures': 1, 'total_validations': 489}
+2025-08-07 13:39:12,049 - INFO - Factor Pool 통계: {'total_factors': 0, 'avg_return': 0, 'avg_sharpe': 0, 'avg_drawdown': 0, 'best_return': 0, 'best_sharpe': 0, 'best_drawdown': 0, 'version_counts': {}}
+2025-08-07 13:39:12,050 - INFO - 최고 성능: -inf
+2025-08-07 13:39:12,051 - INFO - 발견된 팩터 수: 0
+2025-08-07 13:46:00,166 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-07 13:46:00,167 - INFO - NumExpr defaulting to 8 threads.
+2025-08-07 13:46:03,168 - INFO - 데이터 로딩 시작
+2025-08-07 13:46:03,217 - INFO - 데이터 로딩 완료: BTCUSDT_1h
+2025-08-07 13:46:03,217 - INFO - 데이터 크기: (9625, 5), 기간: 2024-06-01 00:00:00+00:00 ~ 2025-07-07 00:00:00+00:00
+2025-08-07 13:46:03,217 - INFO - MCTS 환경 설정
+2025-08-07 13:46:03,219 - INFO - Policy-Value Network 초기화
+2025-08-07 13:46:03,221 - INFO - 네트워크 구조: [256, 256, 128]
+2025-08-07 13:46:03,221 - INFO - Factor Pool 초기화
+2025-08-07 13:46:03,222 - INFO - AlphaZero Trainer 초기화
+2025-08-07 13:46:04,448 - INFO - MCTS 기반 Factor Discovery 학습 시작
+2025-08-07 13:46:04,448 - INFO - 설정:
+2025-08-07 13:46:04,448 - INFO -   - 반복 횟수: 2
+2025-08-07 13:46:04,448 - INFO -   - 반복당 에피소드: 50
+2025-08-07 13:46:04,448 - INFO -   - MCTS 시뮬레이션: 400
+2025-08-07 13:46:04,448 - INFO -   - 신경망 학습 에포크: 10
+2025-08-07 13:46:04,448 - INFO -   - 결과 저장: mcts_results_v3
+2025-08-07 13:46:04,485 - INFO - 학습 완료! 최종 통계:
+2025-08-07 13:46:04,485 - INFO - 환경 통계: {'total_evaluations': 0, 'successful_evaluations': 0, 'success_rate': 0, 'avg_evaluation_time': 0, 'cache_hits': 0, 'total_programs': 0, 'validation_failures': 0, 'total_validations': 0}
+2025-08-07 13:46:04,486 - INFO - Factor Pool 통계: {'total_factors': 0, 'avg_return': 0, 'avg_sharpe': 0, 'avg_drawdown': 0, 'best_return': 0, 'best_sharpe': 0, 'best_drawdown': 0, 'version_counts': {}}
+2025-08-07 13:46:04,486 - INFO - 최고 성능: -inf
+2025-08-07 13:46:04,486 - INFO - 발견된 팩터 수: 0
+2025-08-07 13:47:03,213 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-07 13:47:03,213 - INFO - NumExpr defaulting to 8 threads.
+2025-08-07 13:47:06,130 - INFO - 데이터 로딩 시작
+2025-08-07 13:47:06,168 - INFO - 데이터 로딩 완료: BTCUSDT_1h
+2025-08-07 13:47:06,168 - INFO - 데이터 크기: (9625, 5), 기간: 2024-06-01 00:00:00+00:00 ~ 2025-07-07 00:00:00+00:00
+2025-08-07 13:47:06,168 - INFO - MCTS 환경 설정
+2025-08-07 13:47:06,171 - INFO - Policy-Value Network 초기화
+2025-08-07 13:47:06,173 - INFO - 네트워크 구조: [256, 256, 128]
+2025-08-07 13:47:06,173 - INFO - Factor Pool 초기화
+2025-08-07 13:47:06,174 - INFO - AlphaZero Trainer 초기화
+2025-08-07 13:47:07,390 - INFO - MCTS 기반 Factor Discovery 학습 시작
+2025-08-07 13:47:07,390 - INFO - 설정:
+2025-08-07 13:47:07,390 - INFO -   - 반복 횟수: 2
+2025-08-07 13:47:07,390 - INFO -   - 반복당 에피소드: 50
+2025-08-07 13:47:07,390 - INFO -   - MCTS 시뮬레이션: 400
+2025-08-07 13:47:07,390 - INFO -   - 신경망 학습 에포크: 10
+2025-08-07 13:47:07,390 - INFO -   - 결과 저장: mcts_results_v3
+2025-08-07 13:47:07,442 - INFO - 학습 완료! 최종 통계:
+2025-08-07 13:47:07,442 - INFO - 환경 통계: {'total_evaluations': 0, 'successful_evaluations': 0, 'success_rate': 0, 'avg_evaluation_time': 0, 'cache_hits': 0, 'total_programs': 0, 'validation_failures': 0, 'total_validations': 0}
+2025-08-07 13:47:07,443 - INFO - Factor Pool 통계: {'total_factors': 0, 'avg_return': 0, 'avg_sharpe': 0, 'avg_drawdown': 0, 'best_return': 0, 'best_sharpe': 0, 'best_drawdown': 0, 'version_counts': {}}
+2025-08-07 13:47:07,443 - INFO - 최고 성능: -inf
+2025-08-07 13:47:07,444 - INFO - 발견된 팩터 수: 0
+2025-08-07 13:51:11,418 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-07 13:51:11,418 - INFO - NumExpr defaulting to 8 threads.
+2025-08-07 13:51:14,384 - INFO - 데이터 로딩 시작
+2025-08-07 13:51:14,414 - INFO - 데이터 로딩 완료: BTCUSDT_1h
+2025-08-07 13:51:14,415 - INFO - 데이터 크기: (9625, 5), 기간: 2024-06-01 00:00:00+00:00 ~ 2025-07-07 00:00:00+00:00
+2025-08-07 13:51:14,415 - INFO - MCTS 환경 설정
+2025-08-07 13:51:14,417 - INFO - Policy-Value Network 초기화
+2025-08-07 13:51:14,419 - INFO - 네트워크 구조: [256, 256, 128]
+2025-08-07 13:51:14,419 - INFO - Factor Pool 초기화
+2025-08-07 13:51:14,421 - INFO - AlphaZero Trainer 초기화
+2025-08-07 13:51:15,649 - INFO - MCTS 기반 Factor Discovery 학습 시작
+2025-08-07 13:51:15,650 - INFO - 설정:
+2025-08-07 13:51:15,650 - INFO -   - 반복 횟수: 2
+2025-08-07 13:51:15,650 - INFO -   - 반복당 에피소드: 50
+2025-08-07 13:51:15,650 - INFO -   - MCTS 시뮬레이션: 400
+2025-08-07 13:51:15,651 - INFO -   - 신경망 학습 에포크: 10
+2025-08-07 13:51:15,651 - INFO -   - 결과 저장: mcts_results_v3
+2025-08-07 13:51:15,704 - INFO - 학습 완료! 최종 통계:
+2025-08-07 13:51:15,704 - INFO - 환경 통계: {'total_evaluations': 0, 'successful_evaluations': 0, 'success_rate': 0, 'avg_evaluation_time': 0, 'cache_hits': 0, 'total_programs': 0, 'validation_failures': 0, 'total_validations': 0}
+2025-08-07 13:51:15,705 - INFO - Factor Pool 통계: {'total_factors': 0, 'avg_return': 0, 'avg_sharpe': 0, 'avg_drawdown': 0, 'best_return': 0, 'best_sharpe': 0, 'best_drawdown': 0, 'version_counts': {}}
+2025-08-07 13:51:15,705 - INFO - 최고 성능: -inf
+2025-08-07 13:51:15,706 - INFO - 발견된 팩터 수: 0
+2025-08-07 14:06:28,104 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-07 14:06:28,105 - INFO - NumExpr defaulting to 8 threads.
+2025-08-07 14:06:31,176 - INFO - 데이터 로딩 시작
+2025-08-07 14:06:31,210 - INFO - 데이터 로딩 완료: BTCUSDT_1h
+2025-08-07 14:06:31,210 - INFO - 데이터 크기: (9625, 5), 기간: 2024-06-01 00:00:00+00:00 ~ 2025-07-07 00:00:00+00:00
+2025-08-07 14:06:31,210 - INFO - MCTS 환경 설정
+2025-08-07 14:06:31,212 - INFO - Policy-Value Network 초기화
+2025-08-07 14:06:31,214 - INFO - 네트워크 구조: [256, 256, 128]
+2025-08-07 14:06:31,214 - INFO - Factor Pool 초기화
+2025-08-07 14:06:31,216 - INFO - AlphaZero Trainer 초기화
+2025-08-07 14:06:32,465 - INFO - MCTS 기반 Factor Discovery 학습 시작
+2025-08-07 14:06:32,465 - INFO - 설정:
+2025-08-07 14:06:32,466 - INFO -   - 반복 횟수: 2
+2025-08-07 14:06:32,466 - INFO -   - 반복당 에피소드: 50
+2025-08-07 14:06:32,466 - INFO -   - MCTS 시뮬레이션: 400
+2025-08-07 14:06:32,466 - INFO -   - 신경망 학습 에포크: 10
+2025-08-07 14:06:32,466 - INFO -   - 결과 저장: mcts_results_v3
+2025-08-07 14:11:25,670 - INFO - 학습 완료! 최종 통계:
+2025-08-07 14:11:25,671 - INFO - 환경 통계: {'total_evaluations': 251, 'successful_evaluations': 198, 'success_rate': 0.7888446215139442, 'avg_evaluation_time': 0, 'cache_hits': 26, 'total_programs': 201, 'validation_failures': 3, 'total_validations': 192}
+2025-08-07 14:11:25,672 - INFO - Factor Pool 통계: {'total_factors': 0, 'avg_return': 0, 'avg_sharpe': 0, 'avg_drawdown': 0, 'best_return': 0, 'best_sharpe': 0, 'best_drawdown': 0, 'version_counts': {}}
+2025-08-07 14:11:25,672 - INFO - 최고 성능: -inf
+2025-08-07 14:11:25,673 - INFO - 발견된 팩터 수: 0
+2025-08-07 14:15:53,218 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-07 14:15:53,218 - INFO - NumExpr defaulting to 8 threads.
+2025-08-07 14:15:56,248 - INFO - 데이터 로딩 시작
+2025-08-07 14:15:56,279 - INFO - 데이터 로딩 완료: BTCUSDT_1h
+2025-08-07 14:15:56,279 - INFO - 데이터 크기: (9625, 5), 기간: 2024-06-01 00:00:00+00:00 ~ 2025-07-07 00:00:00+00:00
+2025-08-07 14:15:56,280 - INFO - MCTS 환경 설정
+2025-08-07 14:15:56,282 - INFO - Policy-Value Network 초기화
+2025-08-07 14:15:56,284 - INFO - 네트워크 구조: [256, 256, 128]
+2025-08-07 14:15:56,284 - INFO - Factor Pool 초기화
+2025-08-07 14:15:56,285 - INFO - AlphaZero Trainer 초기화
+2025-08-07 14:15:57,451 - INFO - MCTS 기반 Factor Discovery 학습 시작
+2025-08-07 14:15:57,451 - INFO - 설정:
+2025-08-07 14:15:57,451 - INFO -   - 반복 횟수: 1
+2025-08-07 14:15:57,451 - INFO -   - 반복당 에피소드: 10
+2025-08-07 14:15:57,452 - INFO -   - MCTS 시뮬레이션: 100
+2025-08-07 14:15:57,452 - INFO -   - 신경망 학습 에포크: 10
+2025-08-07 14:15:57,452 - INFO -   - 결과 저장: mcts_test_final
+2025-08-07 14:17:11,492 - INFO - 학습 완료! 최종 통계:
+2025-08-07 14:17:11,492 - INFO - 환경 통계: {'total_evaluations': 101, 'successful_evaluations': 96, 'success_rate': 0.9504950495049505, 'avg_evaluation_time': 0, 'cache_hits': 6, 'total_programs': 98, 'validation_failures': 2, 'total_validations': 92}
+2025-08-07 14:17:11,493 - INFO - Factor Pool 통계: {'total_factors': 0, 'avg_return': 0, 'avg_sharpe': 0, 'avg_drawdown': 0, 'best_return': 0, 'best_sharpe': 0, 'best_drawdown': 0, 'version_counts': {}}
+2025-08-07 14:17:11,493 - INFO - 최고 성능: -inf
+2025-08-07 14:17:11,493 - INFO - 발견된 팩터 수: 0
+2025-08-07 14:17:59,967 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-07 14:17:59,969 - INFO - NumExpr defaulting to 8 threads.
+2025-08-07 14:18:02,866 - INFO - 데이터 로딩 시작
+2025-08-07 14:18:02,898 - INFO - 데이터 로딩 완료: BTCUSDT_1h
+2025-08-07 14:18:02,898 - INFO - 데이터 크기: (9625, 5), 기간: 2024-06-01 00:00:00+00:00 ~ 2025-07-07 00:00:00+00:00
+2025-08-07 14:18:02,898 - INFO - MCTS 환경 설정
+2025-08-07 14:18:02,900 - INFO - Policy-Value Network 초기화
+2025-08-07 14:18:02,902 - INFO - 네트워크 구조: [256, 256, 128]
+2025-08-07 14:18:02,902 - INFO - Factor Pool 초기화
+2025-08-07 14:18:02,903 - INFO - AlphaZero Trainer 초기화
+2025-08-07 14:18:04,101 - INFO - MCTS 기반 Factor Discovery 학습 시작
+2025-08-07 14:18:04,101 - INFO - 설정:
+2025-08-07 14:18:04,101 - INFO -   - 반복 횟수: 1
+2025-08-07 14:18:04,101 - INFO -   - 반복당 에피소드: 10
+2025-08-07 14:18:04,101 - INFO -   - MCTS 시뮬레이션: 100
+2025-08-07 14:18:04,102 - INFO -   - 신경망 학습 에포크: 10
+2025-08-07 14:18:04,102 - INFO -   - 결과 저장: mcts_test_final
+2025-08-07 14:18:43,652 - INFO - 학습 완료! 최종 통계:
+2025-08-07 14:18:43,652 - INFO - 환경 통계: {'total_evaluations': 57, 'successful_evaluations': 52, 'success_rate': 0.9122807017543859, 'avg_evaluation_time': 0, 'cache_hits': 5, 'total_programs': 52, 'validation_failures': 0, 'total_validations': 49}
+2025-08-07 14:18:43,654 - INFO - Factor Pool 통계: {'total_factors': 0, 'avg_return': 0, 'avg_sharpe': 0, 'avg_drawdown': 0, 'best_return': 0, 'best_sharpe': 0, 'best_drawdown': 0, 'version_counts': {}}
+2025-08-07 14:18:43,654 - INFO - 최고 성능: -inf
+2025-08-07 14:18:43,654 - INFO - 발견된 팩터 수: 0
+2025-08-07 14:20:34,208 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-07 14:20:34,208 - INFO - NumExpr defaulting to 8 threads.
+2025-08-07 14:20:37,197 - INFO - 데이터 로딩 시작
+2025-08-07 14:20:37,231 - INFO - 데이터 로딩 완료: BTCUSDT_1h
+2025-08-07 14:20:37,231 - INFO - 데이터 크기: (9625, 5), 기간: 2024-06-01 00:00:00+00:00 ~ 2025-07-07 00:00:00+00:00
+2025-08-07 14:20:37,231 - INFO - MCTS 환경 설정
+2025-08-07 14:20:37,233 - INFO - Policy-Value Network 초기화
+2025-08-07 14:20:37,237 - INFO - 네트워크 구조: [512, 512, 256, 128]
+2025-08-07 14:20:37,237 - INFO - Factor Pool 초기화
+2025-08-07 14:20:37,262 - INFO - AlphaZero Trainer 초기화
+2025-08-07 14:20:38,520 - INFO - MCTS 기반 Factor Discovery 학습 시작
+2025-08-07 14:20:38,520 - INFO - 설정:
+2025-08-07 14:20:38,520 - INFO -   - 반복 횟수: 200
+2025-08-07 14:20:38,520 - INFO -   - 반복당 에피소드: 50
+2025-08-07 14:20:38,521 - INFO -   - MCTS 시뮬레이션: 800
+2025-08-07 14:20:38,521 - INFO -   - 신경망 학습 에포크: 15
+2025-08-07 14:20:38,521 - INFO -   - 결과 저장: mcts_deep_training
