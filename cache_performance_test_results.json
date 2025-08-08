@@ -1,0 +1,88 @@
+{
+  "cache": {
+    "first_run_time": 0.002231597900390625,
+    "second_run_time": 0.002135753631591797,
+    "speedup": 1.044876088412592,
+    "cache_stats": {
+      "program_cache": {
+        "memory_hits": 0,
+        "disk_hits": 0,
+        "misses": 20,
+        "total_requests": 20,
+        "save_time": 0.0,
+        "load_time": 0.0,
+        "hit_rate": 0.0,
+        "memory_hit_rate": 0.0,
+        "disk_hit_rate": 0.0,
+        "memory_size": 0,
+        "avg_load_time": 0.0,
+        "avg_save_time": 0.0
+      }
+    }
+  },
+  "backtest": {
+    "old_time": 0.011194467544555664,
+    "fast_time": 0.905653715133667,
+    "speedup": 0.012360648841266503,
+    "engine_stats": {
+      "total_backtests": 0,
+      "cache_hits": 0,
+      "total_time": 0.0,
+      "avg_time": 0.0,
+      "cache_stats": {
+        "hits": 0,
+        "misses": 10,
+        "total_requests": 10,
+        "hit_rate": 0.0,
+        "cache_size": 10
+      }
+    }
+  },
+  "mcts": {
+    "total_time": 0.002044677734375,
+    "avg_time_per_program": 0.000408935546875,
+    "env_stats": {
+      "total_evaluations": 5,
+      "successful_evaluations": 0,
+      "success_rate": 0.0,
+      "avg_eval_time": 0.000408935546875,
+      "cache_hits": 0,
+      "cache_hit_rate": 0.0,
+      "min_eval_time": 0.0,
+      "max_eval_time": 0.0010426044464111328,
+      "total_eval_time": 0.002044677734375,
+      "backtest_engine_stats": {
+        "total_backtests": 0,
+        "cache_hits": 0,
+        "total_time": 0.0,
+        "avg_time": 0.0,
+        "cache_stats": {
+          "hits": 0,
+          "misses": 10,
+          "total_requests": 10,
+          "hit_rate": 0.0,
+          "cache_size": 10
+        }
+      },
+      "enhanced_cache_stats": {
+        "memory_hits": 0,
+        "disk_hits": 0,
+        "misses": 30,
+        "total_requests": 30,
+        "save_time": 0.0,
+        "load_time": 0.0,
+        "hit_rate": 0.0,
+        "memory_hit_rate": 0.0,
+        "disk_hit_rate": 0.0,
+        "memory_size": 0,
+        "avg_load_time": 0.0,
+        "avg_save_time": 0.0
+      },
+      "base_cache_hits": 0,
+      "base_total_programs": 0,
+      "validation_failures": 0,
+      "total_validations": 0
+    },
+    "success_count": 0
+  }
+}

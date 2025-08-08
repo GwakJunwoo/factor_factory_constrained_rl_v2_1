@@ -4,6 +4,7 @@ import numpy as np, pandas as pd
 from functools import lru_cache
 from .grammar import TOKENS, OPS, TERMS, ARITY, name
 from .cache import get_program_cache
+from .enhanced_cache import get_fast_program_cache
 
 def _sma(x: pd.Series, n:int) -> pd.Series:
     return x.rolling(n).mean()
@@ -64,10 +65,17 @@ def _safe_div(a: pd.Series, b: pd.Series) -> pd.Series:
     eps = np.float32(1e-8)
     return a / (b.abs() + eps)
 
-def eval_prefix(tokens: list[int], df: pd.DataFrame, use_cache: bool = True) -> pd.Series:
+def eval_prefix(tokens: list[int], df: pd.DataFrame, use_cache: bool = True, use_fast_cache: bool = True) -> pd.Series:
     """Evaluate prefix program to a raw series; raise on invalid."""
     
-    # 캐시 확인
+    # 향상된 캐시 우선 확인
+    if use_fast_cache:
+        fast_cache = get_fast_program_cache()
+        cached_result = fast_cache.get(tokens, df)
+        if cached_result is not None:
+            return cached_result
+    
+    # 기존 캐시 확인 (호환성)
     if use_cache:
         cache = get_program_cache()
         cached_result = cache.get(tokens, df)
@@ -132,7 +140,11 @@ def eval_prefix(tokens: list[int], df: pd.DataFrame, use_cache: bool = True) -> 
     result = pd.Series(sig_np, index=raw.index, name="signal")
     
     # 캐시에 저장
-    if use_cache:
+    if use_fast_cache:
+        fast_cache = get_fast_program_cache()
+        fast_cache.put(tokens, df, result)
+    elif use_cache:
+        cache = get_program_cache()
         cache.put(tokens, df, result)
     
     return result

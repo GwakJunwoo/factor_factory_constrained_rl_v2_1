@@ -1,0 +1,14 @@
+2025-08-08 16:19:46,601 - INFO - Note: NumExpr detected 20 cores but "NUMEXPR_MAX_THREADS" not set, so enforcing safe limit of 8.
+2025-08-08 16:19:46,601 - INFO - NumExpr defaulting to 8 threads.
+2025-08-08 16:19:49,865 - INFO - [MCTS] 다종목 MCTS 학습 모드
+2025-08-08 16:19:49,901 - INFO - [OK] BTCUSDT 데이터 로딩: (22803, 5)
+2025-08-08 16:19:49,904 - INFO - [OK] ETHUSDT 시뮬레이션 데이터 생성
+2025-08-08 16:19:49,907 - INFO - [OK] ADAUSDT 시뮬레이션 데이터 생성
+2025-08-08 16:19:49,910 - INFO - [OK] BNBUSDT 시뮬레이션 데이터 생성
+2025-08-08 16:19:49,913 - INFO - [OK] SOLUSDT 시뮬레이션 데이터 생성
+2025-08-08 16:19:51,261 - INFO - [START] 다종목 MCTS 학습 시작
+2025-08-08 16:19:51,261 - INFO -   종목 수: 5
+2025-08-08 16:19:51,261 - INFO -   정규화: z_score
+2025-08-08 16:19:51,261 - INFO -   마켓뉴트럴: True
+2025-08-08 16:19:51,261 - INFO -   반복 횟수: 2
+2025-08-08 16:19:51,267 - INFO - ✅ FastProgramCache 초기화 (메모리: 4096, 디스크: True)

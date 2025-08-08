@@ -1,0 +1,25 @@
+{
+  "timestamp": "2025-08-08T16:19:51.272590",
+  "completed_iterations": 0,
+  "total_iterations": 2,
+  "config": {
+    "symbols": [
+      "BTCUSDT",
+      "ETHUSDT",
+      "ADAUSDT",
+      "BNBUSDT",
+      "SOLUSDT"
+    ],
+    "iterations": 2,
+    "episodes_per_iter": 2,
+    "mcts_simulations": 10,
+    "normalizer": "z_score",
+    "initial_capital": 99996,
+    "commission": 0.0008,
+    "slippage": 1e-05,
+    "market_neutral": true,
+    "save_dir": "multi_asset_gui_results"
+  },
+  "discovered_factors": [],
+  "version": "1.0"
+}

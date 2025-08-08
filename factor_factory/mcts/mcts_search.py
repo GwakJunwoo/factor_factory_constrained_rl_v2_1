@@ -133,13 +133,13 @@ class MCTSSearch:
         node.backup(value)
     
     def _evaluate_terminal(self, node: MCTSNode) -> float:
-        """터미널 노드 평가"""
+        """터미널 노드 평가 - 향상된 캐시 사용"""
         
         if self.evaluation_fn is None:
             # 기본 평가: 프로그램 길이 페널티
             return -len(node.tokens) * 0.01
         
-        # 캐시 확인
+        # 향상된 캐시 확인
         cache_key = tuple(node.tokens)
         if cache_key in self.evaluation_cache:
             self.stats.cache_hits += 1
@@ -147,9 +147,24 @@ class MCTSSearch:
         
         # 실제 평가 (백테스트)
         try:
+            start_time = time.time()
             reward = self.evaluation_fn(node.tokens)
+            
+            # 평가 시간 추적
+            eval_time = time.time() - start_time
+            if not hasattr(self.stats, 'eval_times'):
+                self.stats.eval_times = []
+            self.stats.eval_times.append(eval_time)
+            
+            # 캐시에 저장 (크기 제한)
+            if len(self.evaluation_cache) > 10000:  # 캐시 크기 제한
+                # LRU-style: 가장 오래된 항목 제거
+                oldest_key = next(iter(self.evaluation_cache))
+                del self.evaluation_cache[oldest_key]
+            
             self.evaluation_cache[cache_key] = reward
             return reward
+            
         except Exception as e:
             print(f"⚠️ 평가 오류: {e}")
             return -1.0

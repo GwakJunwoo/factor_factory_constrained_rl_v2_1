@@ -1,0 +1,288 @@
+{
+  "iteration": 20,
+  "total_episodes": 0,
+  "best_performance": -1.0,
+  "training_history": [
+    {
+      "iteration": 1,
+      "time": 0.4798703193664551,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 2,
+      "time": 0.5666000843048096,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 3,
+      "time": 0.48067498207092285,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 4,
+      "time": 0.6120855808258057,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 5,
+      "time": 0.4730260372161865,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 6,
+      "time": 0.579211950302124,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 7,
+      "time": 0.5050549507141113,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 8,
+      "time": 0.6259841918945312,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 9,
+      "time": 0.4747583866119385,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 10,
+      "time": 2.0904123783111572,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 11,
+      "time": 0.5686478614807129,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 12,
+      "time": 0.45256733894348145,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 13,
+      "time": 0.5879194736480713,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 14,
+      "time": 0.45763349533081055,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 15,
+      "time": 0.628864049911499,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 16,
+      "time": 0.5754234790802002,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 17,
+      "time": 0.5758190155029297,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 18,
+      "time": 0.4522285461425781,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    },
+    {
+      "iteration": 19,
+      "time": 0.5814404487609863,
+      "training_stats": {
+        "message": "insufficient_data"
+      },
+      "data_samples": {
+        "total_samples": 0,
+        "episodes": 0,
+        "avg_reward": 0,
+        "max_reward": 0,
+        "min_reward": 0
+      }
+    }
+  ],
+  "performance_history": [
+    {
+      "avg_reward": -1.0,
+      "success_rate": 0.0,
+      "episodes": 30,
+      "best_performance": -1.0
+    },
+    {
+      "avg_reward": -1.0,
+      "success_rate": 0.0,
+      "episodes": 30,
+      "best_performance": -1.0
+    }
+  ],
+  "discovered_factors": 0
+}

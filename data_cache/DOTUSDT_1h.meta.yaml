@@ -1,0 +1,14 @@
+columns:
+- open
+- high
+- low
+- close
+- volume
+data_source: Binance API
+download_timestamp: '2025-08-08T12:20:33.341462'
+end_date: '2025-08-08T03:00:00'
+file_size_mb: 0.6174993515014648
+interval: 1h
+start_date: '2023-01-01T00:00:00'
+symbol: DOTUSDT
+total_records: 22803

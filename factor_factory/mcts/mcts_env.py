@@ -10,16 +10,19 @@ MCTS용 Factor Environment
 
 import numpy as np
 import pandas as pd
+import time
 from typing import List, Dict, Tuple, Optional
 import warnings
 warnings.filterwarnings('ignore')
 
 from ..rlc.env import ProgramEnv, RLCConfig
 from ..rlc.grammar import ARITY
-from ..rlc.utils import tokens_to_infix
+from ..rlc.utils import tokens_to_infix, calc_tree_depth
 from ..rlc.compiler import eval_prefix
 from ..rlc.signal_generator import generate_signal_realtime
 from ..backtest.realistic_engine import realistic_backtest
+from ..backtest.fast_engine import get_fast_backtest_engine
+from ..rlc.enhanced_cache import get_fast_program_cache
 from ..data import ParquetCache
 
 
@@ -38,18 +41,27 @@ class MCTSFactorEnv:
         # 기존 환경의 캐시와 통계 시스템 활용
         self.base_env = ProgramEnv(df, config)
         
+        # 고속 백테스트 엔진
+        self.backtest_engine = get_fast_backtest_engine(
+            commission=config.commission,
+            slippage=config.slippage,
+            leverage=config.leverage
+        )
+        
         # 평가 통계
         self.total_evaluations = 0
         self.successful_evaluations = 0
         self.evaluation_times = []
+        self.cache_hits = 0  # 캐시 히트 수
         
         print(f"✅ MCTS Factor Environment 초기화")
         print(f"  데이터 크기: {len(df)} 행")
         print(f"  기간: {df.index[0]} ~ {df.index[-1]}")
+        print(f"  고속 백테스트 엔진 활성화")
     
     def evaluate_program(self, tokens: List[int]) -> Dict:
         """
-        완성된 프로그램 평가
+        완성된 프로그램 평가 - 고속 백테스트 엔진 사용
         
         Args:
             tokens: 완성된 토큰 시퀀스
@@ -57,11 +69,25 @@ class MCTSFactorEnv:
         Returns:
             평가 결과 딕셔너리
         """
+        start_time = time.time()
         self.total_evaluations += 1
         
         try:
-            # 기존 환경의 평가 로직 재사용
-            result = self._evaluate_with_base_env(tokens)
+            # 1. 캐시 확인
+            cache = get_fast_program_cache()
+            cached_signal = cache.get(tokens, self.df)
+            
+            if cached_signal is not None:
+                self.cache_hits += 1
+                # 캐시된 신호로 빠른 백테스트
+                result = self._fast_backtest_cached_signal(tokens, cached_signal)
+            else:
+                # 2. 신호 생성 및 백테스트
+                result = self._evaluate_with_fast_engine(tokens)
+            
+            # 평가 시간 기록
+            eval_time = time.time() - start_time
+            self.evaluation_times.append(eval_time)
             
             if result['success']:
                 self.successful_evaluations += 1
@@ -69,10 +95,116 @@ class MCTSFactorEnv:
             return result
             
         except Exception as e:
+            eval_time = time.time() - start_time
+            self.evaluation_times.append(eval_time)
+            
             return {
                 'success': False,
                 'reward': -1.0,
                 'error': str(e),
+                'tokens': tokens,
+                'eval_time': eval_time
+            }
+    
+    def _evaluate_with_fast_engine(self, tokens: List[int]) -> Dict:
+        """고속 백테스트 엔진을 사용한 평가"""
+        
+        try:
+            # 1. 신호 생성 (향상된 캐시 사용)
+            signal = eval_prefix(tokens, self.df, use_fast_cache=True)
+            
+            # 2. 기본 검증
+            if signal.isna().all() or not signal.std() > 0:
+                return {
+                    'success': False,
+                    'reward': -1.0,
+                    'error': 'Invalid signal (all NaN or zero variance)',
+                    'tokens': tokens
+                }
+            
+            # 3. 고속 백테스트 실행
+            price = self.df['close']
+            backtest_result = self.backtest_engine.backtest(price, signal)
+            
+            if not backtest_result['success']:
+                return {
+                    'success': False,
+                    'reward': -1.0,
+                    'error': 'Backtest failed',
+                    'tokens': tokens
+                }
+            
+            # 4. 복잡성 페널티 적용
+            complexity_penalty = self._calculate_complexity_penalty(tokens)
+            base_reward = backtest_result['metrics']['sharpe']
+            final_reward = base_reward - complexity_penalty
+            
+            # 5. 성공 결과 반환
+            return {
+                'success': True,
+                'reward': float(final_reward),
+                'base_reward': float(base_reward),
+                'complexity_penalty': float(complexity_penalty),
+                'metrics': backtest_result['metrics'],
+                'equity': backtest_result['equity'],
+                'pnl': backtest_result['pnl'],
+                'signal': signal,
+                'formula': tokens_to_infix(tokens),
+                'tokens': tokens,
+                'depth': calc_tree_depth(tokens),
+                'length': len(tokens)
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'reward': -1.0,
+                'error': f'Evaluation error: {str(e)}',
+                'tokens': tokens
+            }
+    
+    def _fast_backtest_cached_signal(self, tokens: List[int], signal: pd.Series) -> Dict:
+        """캐시된 신호로 빠른 백테스트"""
+        
+        try:
+            # 고속 백테스트 실행
+            price = self.df['close']
+            backtest_result = self.backtest_engine.backtest(price, signal)
+            
+            if not backtest_result['success']:
+                return {
+                    'success': False,
+                    'reward': -1.0,
+                    'error': 'Cached backtest failed',
+                    'tokens': tokens
+                }
+            
+            # 복잡성 페널티 적용
+            complexity_penalty = self._calculate_complexity_penalty(tokens)
+            base_reward = backtest_result['metrics']['sharpe']
+            final_reward = base_reward - complexity_penalty
+            
+            return {
+                'success': True,
+                'reward': float(final_reward),
+                'base_reward': float(base_reward),
+                'complexity_penalty': float(complexity_penalty),
+                'metrics': backtest_result['metrics'],
+                'equity': backtest_result['equity'],
+                'pnl': backtest_result['pnl'],
+                'signal': signal,
+                'formula': tokens_to_infix(tokens),
+                'tokens': tokens,
+                'depth': calc_tree_depth(tokens),
+                'length': len(tokens),
+                'cached': True  # 캐시 사용 표시
+            }
+            
+        except Exception as e:
+            return {
+                'success': False,
+                'reward': -1.0,
+                'error': f'Cached evaluation error: {str(e)}',
                 'tokens': tokens
             }
     
@@ -255,7 +387,7 @@ class MCTSFactorEnv:
         )
     
     def get_statistics(self) -> Dict:
-        """환경 통계 반환"""
+        """환경 통계 반환 - 향상된 캐시 정보 포함"""
         
         success_rate = (
             self.successful_evaluations / self.total_evaluations 
@@ -267,11 +399,23 @@ class MCTSFactorEnv:
             if self.evaluation_times else 0
         )
         
+        cache_hit_rate = (
+            self.cache_hits / self.total_evaluations
+            if self.total_evaluations > 0 else 0
+        )
+        
+        # 백테스트 엔진 통계
+        backtest_stats = self.backtest_engine.get_stats()
+        
+        # 향상된 캐시 통계
+        cache = get_fast_program_cache()
+        cache_stats = cache.get_stats()
+        
         base_stats = {}
         if hasattr(self.base_env, 'total_programs_evaluated'):
             base_stats = {
-                'cache_hits': getattr(self.base_env, 'cache_hits', 0),
-                'total_programs': getattr(self.base_env, 'total_programs_evaluated', 0),
+                'base_cache_hits': getattr(self.base_env, 'cache_hits', 0),
+                'base_total_programs': getattr(self.base_env, 'total_programs_evaluated', 0),
                 'validation_failures': getattr(self.base_env, 'validation_failures', 0),
                 'total_validations': getattr(self.base_env, 'total_validations', 0)
             }
@@ -280,7 +424,14 @@ class MCTSFactorEnv:
             'total_evaluations': self.total_evaluations,
             'successful_evaluations': self.successful_evaluations,
             'success_rate': success_rate,
-            'avg_evaluation_time': avg_eval_time,
+            'avg_eval_time': avg_eval_time,
+            'cache_hits': self.cache_hits,
+            'cache_hit_rate': cache_hit_rate,
+            'min_eval_time': min(self.evaluation_times) if self.evaluation_times else 0,
+            'max_eval_time': max(self.evaluation_times) if self.evaluation_times else 0,
+            'total_eval_time': sum(self.evaluation_times),
+            'backtest_engine_stats': backtest_stats,
+            'enhanced_cache_stats': cache_stats,
             **base_stats
         }
     
@@ -289,8 +440,17 @@ class MCTSFactorEnv:
         self.total_evaluations = 0
         self.successful_evaluations = 0
         self.evaluation_times = []
+        self.cache_hits = 0
+        
+        # 백테스트 엔진 통계 초기화
+        if hasattr(self.backtest_engine, 'stats'):
+            for key in self.backtest_engine.stats:
+                if isinstance(self.backtest_engine.stats[key], (int, float)):
+                    self.backtest_engine.stats[key] = 0
         
         # 기존 환경 통계도 초기화
+        if hasattr(self.base_env, 'reset_statistics'):
+            self.base_env.reset_statistics()
         if hasattr(self.base_env, 'cache_hits'):
             self.base_env.cache_hits = 0
             self.base_env.total_programs_evaluated = 0
